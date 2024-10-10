@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{ poll.title }}</h1>
+    <form method="POST" action="{{ url_for('vote', poll_id=poll.poll_id) }}">
+        {% for option, vote_count in options_with_votes %}
+            <input type="radio" id="option{{ option.option_id }}" name="option" value="{{ option.option_id }}" required>
+            <label for="option{{ option.option_id }}">{{ option.option_text }}</label><br>
+        {% endfor %}
+        <button type="submit">Vote</button>
+    </form>
+    <h2>Results:</h2>
+    <div class="results">
+        {% for option, vote_count in options_with_votes %}
+            <div class="result-item">
+                <span>{{ option.option_text }}: {{ vote_count }} vote{% if vote_count != 1 %}s{% endif %}
+                <div class="result-bar" style="width: {{ (vote_count / options_with_votes|sum(attribute='1') * 100)|round|int }}%;"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Welcome to the Polling App</h1>
+    <h2>Available Polls:</h2>
+    <ul>
+        {% for poll in polls %}
+            <li><a href="{{ url_for('view_poll', poll_id=poll.poll_id) }}">{{ poll.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
